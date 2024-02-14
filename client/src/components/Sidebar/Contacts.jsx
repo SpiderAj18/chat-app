@@ -1,9 +1,15 @@
 import React from 'react'
+import Conversation from './Conversation'
 
 const Contacts = () => {
   return (
     <div>
-      Contacts
+     <Conversation/>
+     <Conversation/>
+     <Conversation/>
+     <Conversation/>
+     <Conversation/>
+     <Conversation/>
     </div>
   )
 }
