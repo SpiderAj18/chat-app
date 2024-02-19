@@ -18,18 +18,18 @@ function App() {
       {/* <Register/> */}
       {/* <Home/> */}
       <Routes>
-        <Route path="/" element={<Home />}>
-          Home
-        </Route>
-        <Route path="/login" element={<Login />}>
-          Home
-        </Route>
+        <Route
+          path="/"
+          element={authUser ? <Home /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/login"
+          element={authUser ? <Navigate to="/" /> : <Login />}
+        />
         <Route
           path="/register"
           element={authUser ? <Navigate to="/" /> : <Register />}
-        >
-          Home
-        </Route>
+        />
       </Routes>
       <Toaster />
     </div>

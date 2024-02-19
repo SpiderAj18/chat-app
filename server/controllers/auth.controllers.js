@@ -62,14 +62,20 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const {userName,password} = req.body
+    console.log(req.body)
     const user = await User.findOne({userName})
+    if(!user){
+      return res.status(400).json("invalid credentials")
+    }
     const isPasswordCorrect = await bcryptjs.compare(password,user.password || "")
-    if(!user || !isPasswordCorrect){
-        res.status(400).json({error:"invalid credentials"})
+    if(!isPasswordCorrect){
+        return res.status(400).json({error:"invalid credentials"})
     }       
-    generateToken(user._id,res);
-
-    res.status(200).json({
+    const token = generateToken(user._id,res);
+    
+    res.cookie(token,{
+       maxAge: 3 * 24 * 60 * 60 * 1000,
+      httpOnly: true,}).status(200).json({
         _id:user._id,
         fullName:user.fullName,
         userName:user.userName,
@@ -79,8 +85,10 @@ const loginUser = async (req, res) => {
 
   } catch (error) {
     console.log("Error while login user",error)
-    res.send(500).json({error:"internal server error while login"})
+    res.status(500).json({error:"internal server error while login"})
+
   }
+
 };
 
 //logoutcontroller

@@ -1,11 +1,13 @@
 import React from 'react'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import useLogout from '../../Hooks/useLogout';
 
 const LogoutBtn = () => {
+  const {loading,logout} = useLogout()
   return (
-    <div className='flex items-start mt-auto'>
-        <LogoutOutlinedIcon className='w-10 h-10 text-white cursor-pointer'/>
-    </div>
+    <button onClick={logout} className='flex w-11 h-10 justify-center mt-auto text-white cursor-pointer bg-transparent'>
+        <LogoutOutlinedIcon />
+    </button>
   )
 }
 
